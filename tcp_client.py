@@ -1,6 +1,7 @@
 from socket import *
 
-serverName = 'localhost'  
+# Permite introducir la IP del servidor; por defecto usa localhost
+serverName = input('IP del servidor (Enter para localhost): ').strip() or 'localhost'
 serverPort = 12000
 clientSocket = socket(AF_INET, SOCK_STREAM)
 clientSocket.connect((serverName, serverPort))
