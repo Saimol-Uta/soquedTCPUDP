@@ -13,9 +13,18 @@ while True:
         sentence = connectionSocket.recv(1024).decode()
         print("Mensaje recibido del cliente:", sentence)
 
-        # Convierte la frase a mayúsculas y la envía de vuelta con un mensaje
-        capitalizedSentence = sentence.upper()
-        response = f"Servidor responde: {capitalizedSentence}"
+        # Pregunta al servidor cómo responder
+        choice = input("¿Responder automático (A) o manual (M)? ").strip().upper()
+        
+        if choice == 'A':
+            # Convierte la frase a mayúsculas y la envía de vuelta con un mensaje
+            capitalizedSentence = sentence.upper()
+            response = f"Servidor responde: {capitalizedSentence}"
+        else:
+            # El servidor ingresa manualmente la respuesta
+            manualResponse = input("Ingresa tu respuesta al cliente: ")
+            response = f"Servidor responde: {manualResponse}"
+        
         connectionSocket.send(response.encode())
         print("Respuesta enviada al cliente:", response)
 

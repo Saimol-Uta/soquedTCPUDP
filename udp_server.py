@@ -9,9 +9,18 @@ print("El servidor está listo para recibir")
 message, clientAddress = serverSocket.recvfrom(2048)
 print(f"Mensaje recibido de {clientAddress}: {message.decode()}")
 
-# Envía respuesta en mayúsculas con mensaje del servidor
-modifiedMessage = message.decode().upper()
-response = f"Servidor responde: {modifiedMessage}"
+# Pregunta al servidor cómo responder
+choice = input("¿Responder automático (A) o manual (M)? ").strip().upper()
+
+if choice == 'A':
+    # Convierte la frase a mayúsculas y la envía de vuelta con un mensaje
+    modifiedMessage = message.decode().upper()
+    response = f"Servidor responde: {modifiedMessage}"
+else:
+    # El servidor ingresa manualmente la respuesta
+    manualResponse = input("Ingresa tu respuesta al cliente: ")
+    response = f"Servidor responde: {manualResponse}"
+
 serverSocket.sendto(response.encode(), clientAddress)
 print("Respuesta enviada al cliente:", response)
 
