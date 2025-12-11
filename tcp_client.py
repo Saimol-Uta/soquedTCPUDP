@@ -4,7 +4,10 @@ from socket import *
 serverName = input('IP del servidor (Enter para localhost): ').strip() or 'localhost'
 serverPort = 12000
 clientSocket = socket(AF_INET, SOCK_STREAM)
+
+print(f"⏳ Intentando establecer conexión TCP (Handshake) con {serverName}:{serverPort}...")
 clientSocket.connect((serverName, serverPort))
+print("✅ Conexión establecida exitosamente.")
 
 # Enviar frase al servidor
 sentence = input('Ingresa una oración en minúsculas: ')

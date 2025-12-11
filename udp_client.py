@@ -7,6 +7,7 @@ clientSocket = socket(AF_INET, SOCK_DGRAM)
 
 # Enviar mensaje al servidor
 message = input('Ingresa una oración en minúsculas: ')
+print(f"📤 Enviando datagrama UDP a {serverName}:{serverPort} (Sin handshake)...")
 clientSocket.sendto(message.encode(), (serverName, serverPort))
 
 # Esperar respuesta del servidor (automática)
