@@ -9,7 +9,7 @@ clientSocket = socket(AF_INET, SOCK_DGRAM)
 message = input('Ingresa una oración en minúsculas: ')
 clientSocket.sendto(message.encode(), (serverName, serverPort))
 
-# Esperar respuesta del servidor
+# Esperar respuesta del servidor (automática)
 modifiedMessage, serverAddress = clientSocket.recvfrom(2048)
 print("Respuesta del servidor:", modifiedMessage.decode())
 
@@ -17,7 +17,15 @@ print("Respuesta del servidor:", modifiedMessage.decode())
 confirmation = "Mensaje recibido correctamente"
 clientSocket.sendto(confirmation.encode(), (serverName, serverPort))
 
-# Recibir respuesta final del servidor
+# Recibir respuesta manual del servidor
+manualMessage, serverAddress = clientSocket.recvfrom(2048)
+print("Respuesta manual del servidor:", manualMessage.decode())
+
+# Enviar confirmación final al servidor
+finalConfirmation = "Confirmación final recibida"
+clientSocket.sendto(finalConfirmation.encode(), (serverName, serverPort))
+
+# Espera confirmación final del servidor
 finalMessage, serverAddress = clientSocket.recvfrom(2048)
 print("Respuesta final del servidor:", finalMessage.decode())
 

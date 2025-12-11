@@ -9,26 +9,27 @@ print("El servidor está listo para recibir")
 message, clientAddress = serverSocket.recvfrom(2048)
 print(f"Mensaje recibido de {clientAddress}: {message.decode()}")
 
-# Pregunta al servidor cómo responder
-choice = input("¿Responder automático (A) o manual (M)? ").strip().upper()
-
-if choice == 'A':
-    # Convierte la frase a mayúsculas y la envía de vuelta con un mensaje
-    modifiedMessage = message.decode().upper()
-    response = f"Servidor responde: {modifiedMessage}"
-else:
-    # El servidor ingresa manualmente la respuesta
-    manualResponse = input("Ingresa tu respuesta al cliente: ")
-    response = f"Servidor responde: {manualResponse}"
-
-serverSocket.sendto(response.encode(), clientAddress)
-print("Respuesta enviada al cliente:", response)
+# Convierte la frase a mayúsculas y la envía de vuelta con un mensaje
+modifiedMessage = message.decode().upper()
+autoResponse = f"Servidor responde (automático): {modifiedMessage}"
+serverSocket.sendto(autoResponse.encode(), clientAddress)
+print("Respuesta automática enviada:", autoResponse)
 
 # Espera confirmación del cliente
 confirmation, clientAddress = serverSocket.recvfrom(2048)
 print("Confirmación recibida del cliente:", confirmation.decode())
 
-# Responde a la confirmación
+# El servidor ingresa manualmente una segunda respuesta
+manualResponse = input("Ingresa tu respuesta manual al cliente: ")
+response = f"Servidor responde (manual): {manualResponse}"
+serverSocket.sendto(response.encode(), clientAddress)
+print("Respuesta manual enviada:", response)
+
+# Espera confirmación final del cliente
+finalConfirmation, clientAddress = serverSocket.recvfrom(2048)
+print("Confirmación final del cliente:", finalConfirmation.decode())
+
+# Responde con confirmación final
 finalResponse = "Servidor: Confirmación recibida. Comunicación finalizada."
 serverSocket.sendto(finalResponse.encode(), clientAddress)
 print(finalResponse)

@@ -10,13 +10,21 @@ clientSocket.connect((serverName, serverPort))
 sentence = input('Ingresa una oración en minúsculas: ')
 clientSocket.send(sentence.encode())
 
-# Recibir frase modificada del servidor
+# Recibir frase modificada del servidor (respuesta automática)
 modifiedSentence = clientSocket.recv(1024)
 print('Desde el servidor:', modifiedSentence.decode())
 
 # Enviar confirmación al servidor
 confirmation = "Mensaje recibido correctamente"
 clientSocket.send(confirmation.encode())
+
+# Recibir respuesta manual del servidor
+manualMessage = clientSocket.recv(1024)
+print('Respuesta manual del servidor:', manualMessage.decode())
+
+# Enviar confirmación final al servidor
+finalConfirmation = "Confirmación final recibida"
+clientSocket.send(finalConfirmation.encode())
 
 # Recibir respuesta final del servidor
 finalMessage = clientSocket.recv(1024)
